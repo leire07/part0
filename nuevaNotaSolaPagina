@@ -1,0 +1,26 @@
+# Diagrama de Secuencia - Crear nueva nota en SPA
+
+```mermaid
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Escribe nueva nota
+    user->>browser: Clic en el botón "Save"
+
+    Note right of browser: El navegador recoge el contenido de la nueva nota y prepara una solicitud POST
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa {"content": "Nueva nota", "date": "2025-03-20"}
+    activate server
+    server-->>browser: HTTP 201 Created (Nota guardada correctamente)
+    deactivate server
+
+    Note right of browser: El navegador actualiza la interfaz con la nueva nota sin recargar la página
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/new_note_spa/data.json
+    activate server
+    server-->>browser: [{ "content": "Nueva nota", "date": "2025-03-20" }, ... ]
+    deactivate server
+
+    Note right of browser: El navegador renderiza la lista de notas actualizada con la nueva nota
