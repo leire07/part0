@@ -1,0 +1,22 @@
+# Diagrama de Secuencia - Acceso a la SPA de notas
+
+```mermaid
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Accede a https://studies.cs.helsinki.fi/exampleapp/spa
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document + JavaScript + CSS
+    deactivate server
+
+    Note right of browser: El navegador comienza a ejecutar JavaScript que controla la SPA
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: El navegador renderiza la lista de notas sin recargar la página
